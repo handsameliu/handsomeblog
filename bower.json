@@ -1,0 +1,20 @@
+{
+  "name": "201605blog",
+  "description": "",
+  "main": "",
+  "authors": [
+    "handsameliu <841849295@qq.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}

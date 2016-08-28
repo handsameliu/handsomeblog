@@ -1,0 +1,105 @@
+#!/usr/bin/env node
+//此文件需要用node来运行
+//核心： require('http').createServer(app).listen(3000)
+
+/**
+ * Module dependencies.
+ */
+//引入app，是一个请求监听处理函数
+var app = require('../app');
+//debug 写日志的模块 返回的也是函数
+var debug = require('debug')('201605blog:server');
+var http = require('http');
+
+/**
+ * Get port from environment and store in Express.
+ * 从环境变量中获取端口号并且保存在express的内部
+ */
+
+var port = normalizePort(process.env.PORT || '3000');
+//在内部保存一个值
+app.set('port', port);
+
+
+/**
+ * Create HTTP server.
+ * 创建一个http的服务器
+ */
+
+var server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ * 在端口上监听所有的请求
+ */
+
+server.listen(port);
+//监听服务器端错误error
+server.on('error', onError);
+//当监听成功那个后执行的回调
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ * 为HTTP服务器“错误”事件事件监听器。
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  //处理特定的监听错误，提供更加友好的信息
+  switch (error.code) {
+    case 'EACCES':
+      //绑定此端口需要额外的权限（mac linex 1000以下端口需要管理员权限）
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+        //端口号被占用
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ * 在服务器监听成功后指定的回调函数
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}

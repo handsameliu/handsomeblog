@@ -1,0 +1,22 @@
+<%include ../include/header.html%>
+<form action="/article/add" method="post" class="form-horizontal">
+    <input type="hidden" name="_id" id="_id" value="<%=article._id%>"/>
+    <div class="form-group">
+        <label for="title" class="control-label col-xs-3">标题</label>
+        <div class="col-xs-6 input-group">
+            <div class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></div>
+            <input type="text" id="title" name="title" class="form-control" value="<%=article.content%>"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="content" class="control-label col-xs-3">正文</label>
+        <div class="col-xs-6 input-group">
+            <div class="input-group-addon"><span class="glyphicon glyphicon-edit"></span></div>
+            <textarea id="content" name="content" class="form-control" cols="10" rows="10"><%=article.content%></textarea>
+        </div>
+    </div>
+    <div class="col-xs-offset-3">
+        <input type="submit" class="btn btn-primary" value="发表"/>
+    </div>
+</form>
+<%include ../include/footer.html%>
